@@ -19,6 +19,9 @@ jobs:
       # A Docker image with Semgrep installed. Do not change this.
       image: returntocorp/semgrep
 
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: github.actor != 'dependabot[bot]'
+
     steps:
       # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
@@ -29,11 +32,3 @@ jobs:
           # Generate a token from Semgrep Cloud Platform > Settings
           # and add it to your GitHub secrets.
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-
-# Skip any PR created by dependabot to avoid permission issues:
-  skip_dependabot:
-    if: github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Skip dependabot
-        run: exit 0
